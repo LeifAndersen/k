@@ -135,7 +135,7 @@ public class BasicParser {
                     	i++;
                         if(mi instanceof StringSentence) {
                             StringSentence mis = (StringSentence)mi;
-                            if(true) {
+                            if(GlobalSettings.abstractSemantics) {
                             	if(mis.getType() == "arule") {
                             		mis.setType("rule");
                             	} else if(mis.getType() == "crule") {

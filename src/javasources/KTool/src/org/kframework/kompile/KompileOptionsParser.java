@@ -37,6 +37,10 @@ public class KompileOptionsParser {
         addOptionS(OptionBuilder.withLongOpt("transition").hasArg().withArgName("string").withDescription("<string> is a space-separated list of tags designating rules to become transitions.").create());
         addOptionS(OptionBuilder.withLongOpt("help-experimental").withDescription("Print help on non-standard options.").create("X"));
 
+        // KFA option
+        addOptionS(OptionBuilder.withLongOpt("abstract").withDescription("Use Abstract Semantics").create('a'));
+        addOptionS(OptionBuilder.withLongOpt("concrete").withDescription("Use Concrete Semantics").create('c'));
+        
         // Experimental options
         addOptionE(OptionBuilder.withLongOpt("step").hasArg().withArgName("string").withDescription("Name of the compilation phase after which the compilation process should stop.").create());
         addOptionE(OptionBuilder.withLongOpt("lib").hasArg().withArgName("file").withDescription("Specify extra-libraries for compile/runtime.").create());

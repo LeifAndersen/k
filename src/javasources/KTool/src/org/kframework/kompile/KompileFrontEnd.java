@@ -92,6 +92,11 @@ public class KompileFrontEnd {
                 else
                     GlobalSettings.style = style;
             }
+            if (cmd.hasOption("abstract")) {
+            	GlobalSettings.abstractSemantics = true;
+            } else if (cmd.hasOption("concrete")) {
+            	GlobalSettings.abstractSemantics = false;
+            }
             kompile(cmd);
         }
     }
@@ -113,7 +118,7 @@ public class KompileFrontEnd {
             context.setKomputationCells(komputationCells);
             assert !context.getKomputationCells().isEmpty();
         }
-
+        
         context.dotk = new File(GlobalSettings.outputDir + File.separator + ".k");
         context.dotk.mkdirs();
 
