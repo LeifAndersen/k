@@ -7,10 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hamcrest.core.IsInstanceOf;
 import org.kframework.kil.ASTNode;
 import org.kframework.kil.DefinitionItem;
 import org.kframework.kil.Module;
+import org.kframework.kil.ModuleItem;
 import org.kframework.kil.Require;
+import org.kframework.kil.StringSentence;
 import org.kframework.kil.loader.Context;
 import org.kframework.parser.basic.Basic;
 import org.kframework.utils.errorsystem.KException;
@@ -54,7 +57,10 @@ public class BasicParser {
                 GlobalSettings.kem.register(new KException(ExceptionType.ERROR, KExceptionGroup.CRITICAL, missingFileMsg + fileName + " given at console.", "", ""));
 
             slurp2(file, context);
-
+            
+            // Deal with abstract rules and concrete rules.
+            
+            
             if (autoinclude) {
                 // parse the autoinclude.k file but remember what I parsed to give the correct order at the end
                 List<DefinitionItem> tempmi = moduleItems;
@@ -116,6 +122,39 @@ public class BasicParser {
             if (!predefined)
                 context.addFileRequirement(buildCanonicalPath(autoincludeFileName, file).getCanonicalPath(), file.getCanonicalPath());
 
+            // Handle abstract and concrete rules
+            for (DefinitionItem di : defItemList) {            	
+                if(di instanceof Module) {
+                    Module m = (Module)di;
+                    List<ModuleItem> iter = new ArrayList<ModuleItem>();
+                    for(ModuleItem i : m.getItems()) {
+                    	iter.add(i);
+                    }
+                    int i = -1;
+                    for(ModuleItem mi : iter) {
+                    	i++;
+                        if(mi instanceof StringSentence) {
+                            StringSentence mis = (StringSentence)mi;
+                            if(true) {
+                            	if(mis.getType() == "arule") {
+                            		mis.setType("rule");
+                            	} else if(mis.getType() == "crule") {
+                            		m.getItems().remove(i);
+                            		i--;
+                            	}
+                            } else {
+                            	if(mis.getType() == "crule") {
+                            		mis.setType("rule");
+                            	} else if(mis.getType() == "arule") {
+                            		m.getItems().remove(i);
+                            		i--;
+                            	}
+                            }
+                        }
+                    }
+                }
+            }
+            
             // add the modules to the modules list and to the map for easy access
             for (DefinitionItem di : defItemList) {
                 if (predefined)

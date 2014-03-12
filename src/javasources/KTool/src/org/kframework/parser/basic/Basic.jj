@@ -426,6 +426,8 @@ PARSER_END(Basic)
 <DEFAULT> TOKEN : 
 {
   <RULE: "rule"> : BUBBLE_STATE
+| <ARULE: "arule"> : BUBBLE_STATE
+| <CRULE: "crule"> : BUBBLE_STATE
 | <CONTEXT: "context"> : BUBBLE_STATE
 | <CONFIGURATION: "configuration"> : BUBBLE_STATE
 
@@ -534,6 +536,8 @@ Sort SortID() : { Sort sort; }
 | "endinterface"  { matchedToken.kind = ENDINTERFACE; } : DEFAULT
 
 | "rule"          { matchedToken.kind = RULE;    } : BUBBLE_STATE
+| "arule"         { matchedToken.kind = ARULE;   } : BUBBLE_STATE
+| "crule"         { matchedToken.kind = CRULE;   } : BUBBLE_STATE
 | "configuration" { matchedToken.kind = CONFIGURATION;  } : BUBBLE_STATE
 | "context"       { matchedToken.kind = CONTEXT; } : BUBBLE_STATE
 
@@ -569,6 +573,8 @@ StringSentence Bubble(String type) :
 | "endinterface"  { matchedToken.kind = ENDINTERFACE; } : DEFAULT
 
 | "rule"          { matchedToken.kind = RULE;    } : BUBBLE_STATE
+| "arule"         { matchedToken.kind = ARULE;   } : BUBBLE_STATE
+| "crule"         { matchedToken.kind = CRULE;   } : BUBBLE_STATE
 | "configuration" { matchedToken.kind = CONFIGURATION;  } : BUBBLE_STATE
 | "context"       { matchedToken.kind = CONTEXT; } : BUBBLE_STATE
 
@@ -773,7 +779,7 @@ void Sentence(Module module) :
   StringSentence ss;
   List<KLabelConstant> list; }
 {
-  ("rule" | "context" | "configuration")
+  ("rule" | "arule" | "crule" | "context" | "configuration")
   { type = image();
     // Note that we must change the "type"
     if (type.equals("configuration")) { type = "config"; } }
