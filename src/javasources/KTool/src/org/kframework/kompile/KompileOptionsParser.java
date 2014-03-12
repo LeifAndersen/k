@@ -38,8 +38,7 @@ public class KompileOptionsParser {
         addOptionS(OptionBuilder.withLongOpt("help-experimental").withDescription("Print help on non-standard options.").create("X"));
 
         // KFA option
-        addOptionS(OptionBuilder.withLongOpt("abstract").withDescription("Use Abstract Semantics").create('a'));
-        addOptionS(OptionBuilder.withLongOpt("concrete").withDescription("Use Concrete Semantics").create('c'));
+        addOptionS(OptionBuilder.withLongOpt("semantics").hasArg().withArgName("string").withDescription("Specify Abstract or Concrete Semantics").create());
         
         // Experimental options
         addOptionE(OptionBuilder.withLongOpt("step").hasArg().withArgName("string").withDescription("Name of the compilation phase after which the compilation process should stop.").create());

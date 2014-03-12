@@ -92,10 +92,12 @@ public class KompileFrontEnd {
                 else
                     GlobalSettings.style = style;
             }
-            if (cmd.hasOption("abstract")) {
-            	GlobalSettings.abstractSemantics = true;
-            } else if (cmd.hasOption("concrete")) {
-            	GlobalSettings.abstractSemantics = false;
+            if (cmd.hasOption("semantics")) {
+                if(cmd.getOptionValue("semantics").equals("abstract")) {
+                    GlobalSettings.abstractSemantics = true;
+                } else if (cmd.getOptionValue("semantics").equals("concrete")) {
+                    GlobalSettings.abstractSemantics = false;
+                }
             }
             kompile(cmd);
         }
